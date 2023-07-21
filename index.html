@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Form Template</title>
+  <title>Title Case</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <link rel="stylesheet" href="css/main.css">
@@ -15,11 +15,14 @@
       margin:auto;
       font-size:x-large;
     }
+    code, pre{
+      background-color: rgb(215, 233, 248);
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1 class="page-header">Form Template</h1>
+    <h1 class="page-header">Title Case</h1>
     <nav class="topnav" id="myTopnav">
       <a href="index.html" class="active">Home</a>
       <a href="#">Link</a>
@@ -30,7 +33,41 @@
   
   <main class="wrapper">
     
-    <h2 class="subheader">Place form code below:</h2>
+    <p>Below is an example of how you can use JavaScript to process text input by the user and display it reformatted as Title Case. For example: If the user enters "hotdog" it should output "Hotdog" (and suprise: it does !!!!)</p>
+
+<p>To do this, I created a form element that contains two <code>&#60;input&#62;</code> elements. One is <code>type="text"</code>, which creates a text input for the user to enter text into. The other one is of <code>type="submit"</code>, which creates a submit button which sends all the form data upon activation.</p>
+
+<p>Then, I created a JavaScript function named <code>toTitleCase(str)</code> that takes a string as an argument, and returns it reformatted to be Title case.</p>
+
+<p>To do this, it first extracts the first character of the string using <code>str.charAt(0)</code>, and then use the <code>.toUpperCase</code> method to make it uppercase. After chaining, it becomes <code>str.charAt(0).toUpperCase()</code>.</p>
+
+<p>Then, I use <code>str.slice(1)</code> to extract all of the characters <i>besides</i> the first character. The reason that works is because if only one argument is passed to <code>.slice()</code>, it takes the character at that index, followed by all other characters past it. Then we just chain the <code>.toLowerCase()</code> method to the end, and end up with <code>str.slice(1).toLowerCase()</code>!</p>
+
+<p>By the end, the function looks like this:</p>
+
+<p><pre><code>  function toTitleCase(str) {
+    // Upper case first letter + Lower case other letters
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  }</code></pre></p>
+
+  <p>After that, I added an event listener to the <code>type="submit"</code> button by using the <code>.addEventListener()</code> method on the submit button's element, which I acquired using <code>document.querySelector("#submit")</code> (by the way, <code>submit</code> is the ID of the submit button... who could've guessed!)</p>
+
+  <p><i>FINALLY</i>, all I had left to do was create an anonymous function to pass into <code>.addEventListener()</code> that would overwrite the <code>.innerHTML</code> property of the div containing the text output, obtained with <code>document.querySelector("#output")</code>... and finally, we're all set!</p>
+  
+  <p>...Oh wait, no thats not all, I also had to make the submit button not do its normal stuff. Obviously!! (Just kidding, this is one of the more confusing pieces to remember, and you don't want to forget it!). To do that, all I had to do is add <code>ev.preventDefault()</code> to the start of the function, preventing the submit button's event <code>ev</code> from doing its normal thing. Fantastic!</p>
+
+  <p>And now, <i>FINALLY,</i> for real this time, it's done! Here is the final code of the event listener:</p>
+
+  <p><pre><code>  mySubmit.addEventListener("click", function(ev){
+    ev.preventDefault(); // Make the "click" event not do what it normally does
+    const myInput = document.querySelector("#input");
+    const myOutput = document.querySelector("#output");
+    myOutput.innerHTML = toTitleCase(myInput.value);
+    // alert(myInput.value)
+  });</code></pre></p>
+
+  <p>Now, try it out below!</p>
+
     <form method="post" action="" class="main-form">
       <div>
         <label for="input">Input:</label><br>
